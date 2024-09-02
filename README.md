@@ -30,3 +30,7 @@ The app's interactive features, such as search, genre filtering, and theme toggl
 
 -->TMDb API Integration:
 The app communicates with the TMDb API to retrieve real-time data about movies and TV shows. This includes popular titles, search results, genre-specific listings, and more.
+
+![Screenshot (57)](https://github.com/user-attachments/assets/7d267be0-8a8d-40e1-bbd4-e9beed72db9e)
+
+
