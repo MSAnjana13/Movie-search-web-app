@@ -39,7 +39,7 @@ header{
 }
 
 .search::placeholder{
-    color: #7378c5;
+    color: #f1f2f5;
 }
 
 main{
@@ -142,13 +142,12 @@ main{
     margin:10px 30px;
     align-items: center;
     justify-content: center;
-    color:grey;
+    color:white;
 }
 
 .page{
     padding:20px;
     cursor:pointer;
-    
 }
 
 .page.disabled{
@@ -162,7 +161,6 @@ main{
     border: 5px solid orange;
     font-size: 20px;
     font-weight: 600;
-    color:grey;
 }
 
 .know-more{
