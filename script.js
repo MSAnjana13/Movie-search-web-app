@@ -199,41 +199,43 @@ function getMovies(url) {
     })
 
 }
+
+
 function showMovies(data) {
-  main.innerHTML = '';
+    main.innerHTML = '';
 
-  data.forEach(movie => {
-      const { title, name, original_title, original_name, poster_path, vote_average, overview, id } = movie;
-      const movieTitle = title || name || original_title || original_name || "Untitled";
-      const movieEl = document.createElement('div');
-      movieEl.classList.add('movie', currentTheme); // Add current theme class here
-      movieEl.innerHTML = `
-          <img src="${poster_path ? IMG_URL + poster_path : 'http://via.placeholder.com/1080x1580'}" alt="${movieTitle}">
-          <div class="movie-info">
-              <h3>${movieTitle}</h3>
-              <span class="${getColor(vote_average)}">${vote_average}</span>
-          </div>
-          <div class="overview">
-              <h3>Overview</h3>
-              ${overview}
-              <br/> 
-              <button class="know-more" id="${id}">Know More</button>
-          </div>
-      `;
+    data.forEach(movie => {
+        const { title, name, original_title, original_name, poster_path, vote_average, overview, id } = movie;
+        const movieTitle = title || name || original_title || original_name || "Untitled"; // Fallback to "Untitled" if no title is found
+        const movieEl = document.createElement('div');
+        movieEl.classList.add('movie');
+        movieEl.innerHTML = `
+            <img src="${poster_path ? IMG_URL + poster_path : 'http://via.placeholder.com/1080x1580'}" alt="${movieTitle}">
 
-      main.appendChild(movieEl);
+            <div class="movie-info">
+                <h3>${movieTitle}</h3>
+                <span class="${getColor(vote_average)}">${vote_average}</span>
+            </div>
 
-      document.getElementById(id).addEventListener('click', () => {
-          console.log(id);
-          openNav(movie);
-      });
-  });
+            <div class="overview">
+                <h3>Overview</h3>
+                ${overview}
+                <br/> 
+                <button class="know-more" id="${id}">Know More</button>
+            </div>
+        `;
+
+        main.appendChild(movieEl);
+
+        document.getElementById(id).addEventListener('click', () => {
+            console.log(id);
+            openNav(movie);
+        });
+    });
 }
 
 
-
 const overlayContent = document.getElementById('overlay-content');
-/* Open when someone clicks on the span element */
 function openNav(movie) {
   let id = movie.id;
   fetch(BASE_URL + '/movie/'+id+'/videos?'+API_KEY).then(res => res.json()).then(videoData => {
@@ -279,7 +281,6 @@ function openNav(movie) {
   })
 }
 
-/* Close when someone clicks on the "x" symbol inside the overlay */
 function closeNav() {
   document.getElementById("myNav").style.width = "0%";
 }
@@ -387,27 +388,3 @@ function pageCall(page){
     getMovies(url);
   }
 }
-// Get the toggle button element
-const themeToggleBtn = document.getElementById('theme-toggle');
-
-// Load the current theme from local storage (if any)
-const currentTheme = localStorage.getItem('theme') || 'light';
-document.body.classList.add(currentTheme);
-document.querySelectorAll('.movie').forEach(movie => movie.classList.add(currentTheme));
-
-// Toggle theme when the button is clicked
-themeToggleBtn.addEventListener('click', () => {
-    const isLight = document.body.classList.contains('light');
-    const newTheme = isLight ? 'dark' : 'light';
-
-    // Toggle the theme on body and movie elements
-    document.body.classList.remove('light', 'dark');
-    document.body.classList.add(newTheme);
-    document.querySelectorAll('.movie').forEach(movie => {
-        movie.classList.remove('light', 'dark');
-        movie.classList.add(newTheme);
-    });
-
-    // Save the new theme to local storage
-    localStorage.setItem('theme', newTheme);
-});
